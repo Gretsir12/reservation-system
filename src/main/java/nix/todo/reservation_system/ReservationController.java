@@ -32,7 +32,7 @@ public class ReservationController {
                 .body(reservationService.getReservationById(id));
     }
     @PostMapping
-    public ResponseEntity<Reservation> createreservation(@RequestBody Reservation reservationToCreate) {
+    public ResponseEntity<Reservation> createReservation(@RequestBody Reservation reservationToCreate) {
         log.info("Called createReservation, reservationToCreate = " + reservationToCreate);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(reservationService.createReservation(reservationToCreate));
