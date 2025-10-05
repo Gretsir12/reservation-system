@@ -1,7 +1,6 @@
 package nix.todo.reservation_system;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public record Reservation (
     Long id,
