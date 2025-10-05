@@ -46,4 +46,19 @@ public class ReservationService {
         reservationMap.put(newReservation.id(), newReservation);
         return newReservation;
     }
+
+    public Reservation updateReservation(Long id, Reservation reservationToUpdate) {
+        if (!reservationMap.containsKey(id)) {
+            throw new NoSuchElementException("Not found reservation by id = " + id);
+        }
+        reservationMap.put(id, reservationToUpdate);
+        return reservationMap.get(id);
+    }
+
+    public void deleteReservation(Long id) {
+        if (!reservationMap.containsKey(id)) {
+            throw new NoSuchElementException("Not found reservation by id = " + id);
+        }
+        reservationMap.remove(id);
+    }
 }
