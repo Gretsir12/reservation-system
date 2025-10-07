@@ -66,19 +66,19 @@ REST Controller for managing reservation operations including CRUD functionality
   - `200 OK` - Reservation successfully approved
   - `400 BAD REQUEST` - Approval failed (invalid state)
 - **Logs:** "Called approveReservation"
-
+<!-- 
 ## Error Handling
 
 | Exception | HTTP Status | Description |
 |-----------|-------------|-------------|
 | `NoSuchElementException` | `404 NOT FOUND` | Requested resource not found |
 | `IllegalStateException` | `400 BAD REQUEST` | Invalid operation state |
-| General `Exception` | `400 BAD REQUEST` | Update operation failed |
+| General `Exception` | `400 BAD REQUEST` | Update operation failed | -->
 
-## Technology Stack
+<!-- ## Technology Stack
 - **Framework:** Spring Boot
 - **Logging:** SLF4J
-- **Architecture:** REST Controller + Service Layer
+- **Architecture:** REST Controller + Service Layer -->
 
 ## Example Usage
 
@@ -87,11 +87,11 @@ REST Controller for managing reservation operations including CRUD functionality
 curl -X POST /reservation \
   -H "Content-Type: application/json" \
   -d '{
-    "customerName": "John Doe",
-    "date": "2024-01-15",
-    "time": "19:00",
-    "partySize": 4
-  }'
+    "userId": 5,
+    "roomId": 1,
+    "startDate": "2025-03-08",
+    "endDate": "2025-03-20"
+}'
 ```
 
 ### Approve Reservation
