@@ -1,8 +1,12 @@
 package nix.todo.reservation_system;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import java.time.LocalDate;
 
+@Getter
+@Setter
 @Table(name = "reservations")
 @Entity
 public class ReservationEntity {
@@ -42,25 +46,6 @@ public class ReservationEntity {
         this.roomId = roomId;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.status = status;
-    }
-
-    public Long getUserId() {
-        return this.userId;
-    }
-    public Long getRoomId() {
-        return this.roomId;
-    }
-    public LocalDate getStartDate() {
-        return this.startDate;
-    }
-    public LocalDate getEndDate() {
-        return this.endDate;
-    }
-    public ReservationStatus getStatus() {
-        return this.status;
-    }
-    public void setStatus(ReservationStatus status) {
         this.status = status;
     }
 }
