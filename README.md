@@ -96,7 +96,7 @@ curl -X POST /reservation \
 
 ### Approve Reservation
 ```bash
-curl -X POST /reservation/123/approve
+curl -X POST /reservation/{id}/approve
 ```
 
 ## Notes
