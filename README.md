@@ -3,6 +3,11 @@
 ## Overview
 REST Controller for managing reservation operations including CRUD functionality and approval workflow.
 
+## Download
+```
+git clone https://github.com/Gretsir12/reservation-system.git
+```
+
 ## Base URL
 ```
 /reservation
