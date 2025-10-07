@@ -1,4 +1,7 @@
 package nix.todo.reservation_system;
 
-public interface ReservationRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ReservationRepository extends JpaRepository<ReservationEntity, Long> {
+
 }

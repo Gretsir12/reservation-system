@@ -3,12 +3,11 @@ package nix.todo.reservation_system;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.NoSuchElementException;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/reservation")
@@ -77,7 +76,11 @@ public class ReservationController {
     @PostMapping("/{id}/approve")
     public ResponseEntity<Reservation> approveReservation(@PathVariable Long id) {
         log.info("Called approveReservation");
-        var reservation = reservationService.approveReservation(id);
-        return ResponseEntity.ok(reservation);
+        try {
+            var reservation = reservationService.approveReservation(id);
+            return ResponseEntity.ok(reservation);
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 }
