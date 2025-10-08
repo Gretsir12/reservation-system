@@ -32,6 +32,9 @@ public class ReservationService {
         if (reservationToCreate.status() != null) {
             throw new IllegalArgumentException("Status should be empty");
         }
+        if (!reservationToCreate.startDate().isBefore(reservationToCreate.endDate())) {
+            throw new IllegalArgumentException("Uncorrrect date");
+        }
         var entityToSave = new ReservationEntity(
                 null,
                 reservationToCreate.userId(),
@@ -81,6 +84,22 @@ public class ReservationService {
         }
 
         reservationEntity.setStatus(ReservationStatus.APPROVED);
+        repository.save(reservationEntity);
+        return toDomainreservation(reservationEntity);
+    }
+
+    public Reservation cancelReservation(Long id) {
+        var reservationEntity = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Not found reservation by id = " + id));
+
+        if (reservationEntity.getStatus() != ReservationStatus.PENDING) {
+            throw new IllegalStateException("Cannot modify reservation: staus = " + reservationEntity.getStatus());
+        }
+        var isConflict = isReservationConflict(reservationEntity);
+        if (isConflict) {
+            throw new IllegalStateException("Cannot approve reservation because of conflict");
+        }
+
+        reservationEntity.setStatus(ReservationStatus.CANCELLED);
         repository.save(reservationEntity);
         return toDomainreservation(reservationEntity);
     }

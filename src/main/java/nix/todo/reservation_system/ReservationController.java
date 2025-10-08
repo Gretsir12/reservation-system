@@ -6,7 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import java.util.NoSuchElementException;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @RestController
 @RequestMapping("/reservation")
@@ -31,62 +33,50 @@ public class ReservationController {
     @GetMapping("/{id}")
     public ResponseEntity<Reservation> getReservationById(@PathVariable Long id){
         log.info("Called getReservationById");
-        try {
-            return ResponseEntity.ok(reservationService.getReservationById(id));
-        } 
-        catch (NoSuchElementException e) {
-            return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .build();
-        }
+        return ResponseEntity.ok(reservationService.getReservationById(id));
     }
 
     @PostMapping
     public ResponseEntity<Reservation> createReservation(@RequestBody Reservation reservationToCreate) {
         log.info("Called createReservation, reservationToCreate");
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(reservationService.createReservation(reservationToCreate));
+        var reservation = ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(reservationService
+                .createReservation(reservationToCreate));
+        return reservation;
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Reservation> updateReservation(@PathVariable Long id, @RequestBody Reservation reservationToUpdate) {
         log.info("Called updateReservation");
-        try {
-            var updated = reservationService.updateReservation(id, reservationToUpdate);
-                return ResponseEntity
-                        .status(HttpStatus.OK)
-                        .body(updated);
-        } catch(Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        } 
+        var updated = reservationService.updateReservation(id, reservationToUpdate);
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(updated);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteReservation(@PathVariable Long id) {
         log.info("Called deleteReservation");
-        try {
-            reservationService.deleteReservation(id);
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .build();
-        } catch (NoSuchElementException e) {
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .build();
-        }
+        reservationService.deleteReservation(id);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .build();
     }
 
     @PostMapping("/{id}/approve")
     public ResponseEntity<Reservation> approveReservation(@PathVariable Long id) {
         log.info("Called approveReservation");
-        try {
-            var reservation = reservationService.approveReservation(id);
-            return ResponseEntity
-                    .ok(reservation);
-        } catch (IllegalStateException e) {
-            return ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .build();
-        }
+        var reservation = reservationService.approveReservation(id);
+        return ResponseEntity
+                .ok(reservation);
+    }
+
+    @PostMapping("/{id}/cancel")
+    public ResponseEntity<Reservation> cancelReservation(@PathVariable Long id) {
+        log.info("Called cancelReservation");
+        var reservation = reservationService.cancelReservation(id);
+        return ResponseEntity
+            .ok(reservation);
     }
 }
